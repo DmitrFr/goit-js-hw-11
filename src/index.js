@@ -25,6 +25,7 @@ const PER_PAGE = 'per_page=40';
 let imgQuantity = 0;
 let pageIndex = 1;
 let value = '';
+let p = '';
 const lightBox = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
   captionDelay: 250,
