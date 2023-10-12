@@ -1,9 +1,11 @@
 import axios from 'axios';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
 Notify.init({
-  position: 'center-top',
-  distance: '70px',
+  position: 'right-bottom',
+  distance: '50px',
   timeout: 3000,
   cssAnimationStyle: 'zoom',
   fontFamily: 'Arial, sans-serif',
@@ -23,6 +25,10 @@ const PER_PAGE = 'per_page=40';
 let imgQuantity = 0;
 let pageIndex = 1;
 let value = '';
+const lightBox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+});
 
 loadButton.classList.add('is-hidden');
 
@@ -57,8 +63,8 @@ async function onFormSubmit(event) {
         Notify.success(`Hooray! We found ${response.data.totalHits} images.`);
         value = this.elements.searchQuery.value;
       }
-      //pageIndex += 1; RABOTAET
     });
+  lightBox.refresh();
   return axiosGet;
 }
 
@@ -71,7 +77,9 @@ function drawCards(res) {
     .map(
       user =>
         `<div class="photo-card">
-  <img src="${user.webformatURL}" alt="${user.tags}" loading="lazy" />
+  <a class="gallery__link" href="${user.largeImageURL}">
+    <img class="gallery__image" src="${user.webformatURL}" alt="${user.tags}" loading="lazy" />
+  </a>
   <div class="info">
     <p class="info-item">
       <b>Likes</b>
@@ -124,7 +132,7 @@ async function onLoadButtonClick() {
       drawCards(response.data.hits);
       imgQuantity += 40;
       console.log(imgQuantity);
-      //pageIndex += 1; RABOTAET
     });
+  lightBox.refresh();
   return axiosGet;
 }
