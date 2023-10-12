@@ -1,2 +1,8 @@
 @import './common';
 @import './example';
+
+.is-hidden {
+  display: none;
+  visibility: hidden;
+  pointer-events: none;
+}
